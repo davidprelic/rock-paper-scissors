@@ -1,0 +1,69 @@
+<script>
+
+    function computerPlay() {
+	let choice = ['Rock', 'Paper', 'Scissors'];
+	let chosenIndex = Math.floor(Math.random() * 3);
+	return choice[chosenIndex];
+    }
+
+
+    function playRound(playerSelection, computerSelection) {
+	let playerSel = playerSelection.toLowerCase();
+	let playerSelCmp = playerSel.replace(playerSel[0], playerSel[0].toUpperCase());
+	if(playerSelCmp === computerSelection) {
+	    return "It's tied. " + "You both chosed " + computerSelection;
+	}
+	else if(playerSelCmp === "Rock" && computerSelection === "Scissors") {
+	    return "You Win! Rock beats Scissors";
+	}
+	else if(playerSelCmp === "Scissors" && computerSelection === "Rock") {
+	    return "You Lose! Rock beats Scissors";
+	}
+	else if(playerSelCmp === "Paper" && computerSelection === "Rock") {
+	    return "You Win! Paper beats Rock";
+	}
+	else if(playerSelCmp === "Rock" && computerSelection === "Paper") {
+	    return "You Lose! Paper beats Rock";
+	}
+	else if(playerSelCmp === "Scissors" && computerSelection === "Paper") {
+	    return "You Win! Scissors beats Paper";
+	}
+	else if(playerSelCmp === "Paper" && computerSelection === "Scissors") {
+	    return "You Lose! Scissors beats Paper";
+	}
+    }
+
+
+    function game() {
+	let compWins = 0;
+	let playerWins = 0;
+	for(let i = 0; i < 5; i++) {
+	     let playerChoice = prompt("Rock-Paper-Scissors (3,2,1):");
+	     let compChoice = computerPlay();
+	     let resOfRound = playRound(playerChoice, compChoice);
+	     console.log(resOfRound);
+	     if(resOfRound.search("Win") !== -1) {
+		 playerWins++;
+	     } 
+	     else if(resOfRound.search("Lose") !== -1) {
+		 compWins++;
+	     } 
+	}
+	finalScore(compWins, playerWins);
+     }
+
+
+     function finalScore(compWins, playerWins) {
+	if(compWins > playerWins) {
+	   alert("You LOST this game. Score was " + playerWins + ":" + compWins + " for COMPUTER");
+	}
+	else if(compWins < playerWins) {
+	   alert("You WON this game. Score was " + playerWins + ":" + compWins + " for YOU");
+	}
+	else {
+	   alert("This game was TIED. Score was " + playerWins + ":" + compWins);
+	}
+     }
+
+	game();
+</script>
