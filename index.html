@@ -1,3 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+   <meta content="utf-8" http-equiv="encoding">
+
+
+   <title>Rock-Paper-Scissors</title>
+
+   <style>
+	
+	#rpsButtons {
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+	   position: relative;
+	   top: 350px;
+	}
+
+	#resOfRound {
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+	   position: relative;
+	   top: 200px;
+	}
+
+	#runScore {
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+	   position: relative;
+	   top: 300px;
+	}
+	
+	button {
+	   width: 200px;
+	   height: 80px;
+	}
+
+   </style>
+
+</head>
+<body>
+
+   <div id="resOfRound">Choose Rock, Paper or Scissors, game has 5 round!</div>
+
+   <div id="runScore">SCORE 0 : 0</div>
+
+   <div id="rpsButtons">
+	<button class="choice">ROCK</button>
+        <button class="choice">PAPER</button>
+        <button class="choice">SCISSORS</button>
+   </div>
+
+
+   
+
+
 <script>
 
     function computerPlay() {
@@ -37,33 +96,53 @@
     function game() {
 	let compWins = 0;
 	let playerWins = 0;
-	for(let i = 0; i < 5; i++) {
-	     let playerChoice = prompt("Rock-Paper-Scissors (3,2,1):");
-	     let compChoice = computerPlay();
-	     let resOfRound = playRound(playerChoice, compChoice);
-	     console.log(resOfRound);
-	     if(resOfRound.search("Win") !== -1) {
+	
+	const body = document.querySelector('body');
+	const runScoreDiv = document.querySelector('#runScore');
+	const resDiv = document.querySelector('#resOfRound');
+	const btns = document.querySelectorAll('.choice');
+	for(let i = 0; i < btns.length; i++) {
+	   btns[i].addEventListener('click', function() {
+	      if(i === 0) {
+	         playerSel = 'rock';      
+	      }
+	      else if(i === 1) {
+	         playerSel = 'paper';      
+	      }
+	      else {
+	         playerSel = 'scissors';
+              }
+	      let resOfRound = playRound(playerSel ,computerPlay());
+	      resDiv.textContent = resOfRound;
+
+	      if(resOfRound.search("Win") !== -1) {
 		 playerWins++;
 	     } 
 	     else if(resOfRound.search("Lose") !== -1) {
 		 compWins++;
-	     } 
-	}
-	finalScore(compWins, playerWins);
+	     }    
+	     runScoreDiv.textContent = 'USER ' + playerWins + ' : ' + compWins + " COMP";
+	     if(playerWins === 5 || compWins === 5) {
+		runScoreDiv.textContent = finalScore(compWins, playerWins);
+	     }
+	   });
+	}	
      }
 
 
      function finalScore(compWins, playerWins) {
 	if(compWins > playerWins) {
-	   alert("You LOST this game. Score was " + playerWins + ":" + compWins + " for COMPUTER");
+	   return "You LOST this game. Score was " + playerWins + ":" + compWins + " for COMPUTER";
 	}
 	else if(compWins < playerWins) {
-	   alert("You WON this game. Score was " + playerWins + ":" + compWins + " for YOU");
+	   return "You WON this game. Score was " + playerWins + ":" + compWins + " for YOU";
 	}
 	else {
-	   alert("This game was TIED. Score was " + playerWins + ":" + compWins);
+	   return "This game was TIED. Score was " + playerWins + ":" + compWins;
 	}
      }
 
 	game();
 </script>
+</body>
+</html>
